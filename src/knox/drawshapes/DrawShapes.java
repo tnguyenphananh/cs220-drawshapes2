@@ -28,7 +28,8 @@ public class DrawShapes extends JFrame
     private enum ShapeType {
         SQUARE,
         CIRCLE,
-        RECTANGLE
+        RECTANGLE,
+        POLYGON
     }
     
     private DrawShapesPanel shapePanel;
@@ -38,7 +39,7 @@ public class DrawShapes extends JFrame
     private Point startDrag;
 
 
-    public DrawShapes(int width, int height)
+    public DrawShapes(Color color, int width, int height)
     {
         setTitle("Draw Shapes!");
         scene=new Scene();
@@ -89,10 +90,16 @@ public class DrawShapes extends JFrame
                                 100, 
                                 200,
                                 color));
+                    } else if(shapeType == ShapeType.POLYGON) {
+                    	scene.addShape(new Polygon(color,
+                    			e.getPoint(),
+                    			100));
                     }
                     
                 } else if (e.getButton()==MouseEvent.BUTTON2) {
                     // apparently this is middle click
+                    scene.clear();
+                    repaint();
                 } else if (e.getButton()==MouseEvent.BUTTON3){
                     // right right-click
                     Point p = e.getPoint();
@@ -260,6 +267,16 @@ public class DrawShapes extends JFrame
             }
         });
 
+        //new color
+        addToMenu(colorMenu, "Pastel Pink", new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                String text=e.getActionCommand();
+                System.out.println(text);
+                // change the color instance variable to blue
+                color = (new Color(237, 173, 197));
+            }
+        });
+
         // shape menu
         JMenu shapeMenu = new JMenu("Shape");
         menuBar.add(shapeMenu);
@@ -279,6 +296,15 @@ public class DrawShapes extends JFrame
             public void actionPerformed(ActionEvent e) {
                 System.out.println("Circle");
                 shapeType = ShapeType.CIRCLE;
+            }
+        });
+
+        // circle
+        addToMenu(shapeMenu, "Polygon", new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                System.out.println("Polygon");
+                shapeType = ShapeType.POLYGON;
             }
         });
         
@@ -365,7 +391,7 @@ public class DrawShapes extends JFrame
      */
     public static void main(String[] args)
     {
-        DrawShapes shapes=new DrawShapes(700, 600);
+        DrawShapes shapes=new DrawShapes(Color.WHITE, 700, 600);
         shapes.setVisible(true);
     }
 

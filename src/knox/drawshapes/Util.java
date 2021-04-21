@@ -11,6 +11,8 @@ public class Util
             return "BLUE";
         }else if (color == Color.GREEN){
             return "GREEN";
+        }else if (color == new Color(237, 173, 197)){
+            return "PASTEL PINK";
         }
         throw new UnsupportedOperationException("Unexpected color: "+color);
     }
@@ -22,6 +24,8 @@ public class Util
             return Color.BLUE;
         }else if (color.equals("GREEN")){
             return Color.GREEN;
+        }else if (color.equals("PASTEL PINK")){
+            return (new Color(237, 173, 197));
         }
         throw new UnsupportedOperationException("Unexpected color: "+color);
     }

@@ -127,6 +127,10 @@ public class Scene implements Iterable<IShape>
         shapeList.add(s);
     }
     
+    public void clear(){
+        shapeList.clear();
+    }
+
     /**
      * Remove a list of shapes from the given scene.
      * @param shapesToRemove
@@ -203,6 +207,16 @@ public class Scene implements Iterable<IShape>
                 Rectangle rec = new Rectangle(new Point(left, top), width, height, color);
                 rec.setSelected(selected);
                 addShape(rec);
+            } else if (type.startsWith("POLYGON")) {
+            	//POLYGON centerx centery length color selected
+            	int centerx = scan.nextInt();
+            	int centery = scan.nextInt();
+            	int length = scan.nextInt();
+            	Color color = Util.stringToColor(scan.next());
+                boolean selected = Boolean.parseBoolean(scan.next());
+                Polygon polygon = new Polygon(color, new Point(centerx, centery),length);
+                polygon.setSelected(selected);
+                addShape(polygon);
             }
         }
     }
@@ -212,6 +226,7 @@ public class Scene implements Iterable<IShape>
 			if (s.isSelected()) s.scale(d);
 		}
 	}
+
 
 	public void moveSelected(int dx, int dy) {
 		for (IShape s : shapeList) {
